@@ -8,6 +8,6 @@
 
 https://codesandbox.io/s/ji-suan-ji-2005qu-zhi-xin-35nvy2?file=/index.html
 ### 第二次作业
-最大连续子数组和源代码见--最大连续子数组.cpp
+源代码见--最大连续子数组和.cpp
 ## 软件工程-线下结对任务
 ### 第三次作业
