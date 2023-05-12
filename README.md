@@ -12,3 +12,5 @@ https://codesandbox.io/s/ji-suan-ji-2005qu-zhi-xin-35nvy2?file=/index.html
 ## 软件工程-线下结对任务
 ### 第三次作业
 源代码见--商城商品管理系统.cpp
+### 第四次作业
+源代码见--四则运算自动生成程序.cpp
