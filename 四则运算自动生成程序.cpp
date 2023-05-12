@@ -1,36 +1,37 @@
 #include<iostream>
 #include<fstream>
 #include<cstring>
+#include<cmath>
 #include<queue>
 #include<Windows.h>
 using namespace std;
 
-int topics_num;//ÓÃ»§ÖÆ¶¨Éú³ÉÌâÄ¿ÊıÁ¿
-bool operation[5] = { 0 };//ÓÃ»§Ñ¡ÔñÔËËã·û
+int topics_num;//ç”¨æˆ·åˆ¶å®šç”Ÿæˆé¢˜ç›®æ•°é‡
+bool operation[5] = { 0 };//ç”¨æˆ·é€‰æ‹©è¿ç®—ç¬¦
 string operate[5] = { "+","-","*","/" };
-int magnitude = 0;//ÓÃ»§Ñ¡ÔñÊı¾İÁ¿¼¶£¨10£¬100£©
-bool bracket = 0, decimal = 0;//ÊÇ·ñÓĞÀ¨ºÅ¡¢Ğ¡Êı
-int out_way = 0;//ÓÃ»§Ñ¡ÔñÊä³ö·½Ê½£¨ÏÔÊ¾1¡¢µ¼³öÎÄ¼ş2£©
-int level = 0;//ÓÃ»§Ñ¡ÔñÌâÄ¿µÈ¼¶£¨1¡¢2¡¢3£©
+int magnitude = 0;//ç”¨æˆ·é€‰æ‹©æ•°æ®é‡çº§ï¼ˆ10ï¼Œ100ï¼‰
+bool bracket = 0, decimal = 0;//æ˜¯å¦æœ‰æ‹¬å·ã€å°æ•°
+int out_way = 0;//ç”¨æˆ·é€‰æ‹©è¾“å‡ºæ–¹å¼ï¼ˆæ˜¾ç¤º1ã€å¯¼å‡ºæ–‡ä»¶2ï¼‰
+int level = 0;//ç”¨æˆ·é€‰æ‹©é¢˜ç›®ç­‰çº§ï¼ˆ1ã€2ã€3ï¼‰
 
-void select_amount()//ÓÃ»§ÖÆ¶¨Éú³ÉÌâÄ¿ÊıÁ¿
+void select_amount()//ç”¨æˆ·åˆ¶å®šç”Ÿæˆé¢˜ç›®æ•°é‡
 {
 	topics_num = 0;
-	cout << "©¦        ÇëÊäÈëÄúÏë¶¨ÖÆµÄÌâÄ¿ÊıÁ¿        ©¦" << endl;
-	cout << "©¦";
+	cout << "â”‚        è¯·è¾“å…¥æ‚¨æƒ³å®šåˆ¶çš„é¢˜ç›®æ•°é‡        â”‚" << endl;
+	cout << "â”‚";
 	cin >> topics_num;
-	cout << "                                         ©¦" << endl;
+	cout << "                                         â”‚" << endl;
 	return;
 }
 
-void select_operation()//ÓÃ»§Ñ¡ÔñÔËËã·û
+void select_operation()//ç”¨æˆ·é€‰æ‹©è¿ç®—ç¬¦
 {
 	memset(operation, 5, 0);
 	string in;
-	cout << "©¦         ÇëÊäÈëÄúÏëÑ¡ÔñµÄÔËËã·û         ©¦" << endl;
-	cout << "©¦";
+	cout << "â”‚         è¯·è¾“å…¥æ‚¨æƒ³é€‰æ‹©çš„è¿ç®—ç¬¦         â”‚" << endl;
+	cout << "â”‚";
 	cin >> in;
-	cout << "                                         ©¦" << endl;
+	cout << "                                         â”‚" << endl;
 	for (int i = 0; i < in.size(); i++)
 	{
 		if (in[i] == '+')
@@ -44,7 +45,7 @@ void select_operation()//ÓÃ»§Ñ¡ÔñÔËËã·û
 		if (in[i] != '+' && in[i] != '-' && in[i] != '*' && in[i] != '/')
 		{
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xFC);
-			cout << "©¦        !!!ÇëÊäÈëÕıÈ·µÄÔËËã·û!!!        ©¦" << endl;
+			cout << "â”‚        !!!è¯·è¾“å…¥æ­£ç¡®çš„è¿ç®—ç¬¦!!!        â”‚" << endl;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xF0);
 			select_operation();
 		}
@@ -52,44 +53,44 @@ void select_operation()//ÓÃ»§Ñ¡ÔñÔËËã·û
 	return;
 }
 
-void select_data_magnitude()//ÓÃ»§Ñ¡ÔñÊı¾İÁ¿¼¶£¨10£¬100£©
+void select_data_magnitude()//ç”¨æˆ·é€‰æ‹©æ•°æ®é‡çº§ï¼ˆ10ï¼Œ100ï¼‰
 {
 	magnitude = 0;
-	cout << "©¦  ÇëÊäÈëÄúÏëÑ¡ÔñµÄÊı¾İÁ¿¼¶£¨10£¬100£©   ©¦" << endl;
-	cout << "©¦";
+	cout << "â”‚  è¯·è¾“å…¥æ‚¨æƒ³é€‰æ‹©çš„æ•°æ®é‡çº§ï¼ˆ10ï¼Œ100ï¼‰   â”‚" << endl;
+	cout << "â”‚";
 	cin >> magnitude;
-	cout << "                                         ©¦" << endl;
+	cout << "                                         â”‚" << endl;
 	return;
 }
 
-void select_bracket()//ÓÃ»§Ñ¡ÔñÊÇ·ñĞèÒªÀ¨ºÅ
+void select_bracket()//ç”¨æˆ·é€‰æ‹©æ˜¯å¦éœ€è¦æ‹¬å·
 {
 	bracket = 0;
 	string in;
-	cout << "©¦ÇëÊäÈëÄúÊÇ·ñĞèÒªÀ¨ºÅ£¨ÊÇ¡¤1¡¤  ·ñ¡¤0¡¤£©©¦" << endl;
-	cout << "©¦";
+	cout << "â”‚è¯·è¾“å…¥æ‚¨æ˜¯å¦éœ€è¦æ‹¬å·ï¼ˆæ˜¯Â·1Â·  å¦Â·0Â·ï¼‰â”‚" << endl;
+	cout << "â”‚";
 	cin >> in;
-	cout << "                                         ©¦" << endl;
+	cout << "                                         â”‚" << endl;
 	if (in == "1")
 		bracket = 1;
 	else if (in == "0")
 		bracket = 0;
 	else
 	{
-		cout << "©¦          !!!ÇëÊäÈëÕıÈ·µÄÑ¡Ïî!!!        ©¦" << endl;
+		cout << "â”‚          !!!è¯·è¾“å…¥æ­£ç¡®çš„é€‰é¡¹!!!        â”‚" << endl;
 		select_bracket();
 	}
 	return;
 }
 
-void select_decimal()//ÓÃ»§Ñ¡ÔñÊä³ö·½Ê½
+void select_decimal()//ç”¨æˆ·é€‰æ‹©è¾“å‡ºæ–¹å¼
 {
 	decimal = 0;
 	string in;
-	cout << "©¦ÇëÊäÈëÄúÊÇ·ñĞèÒªĞ¡Êı£¨ÊÇ¡¤1¡¤  ·ñ¡¤0¡¤£©©¦" << endl;
-	cout << "©¦";
+	cout << "â”‚è¯·è¾“å…¥æ‚¨æ˜¯å¦éœ€è¦å°æ•°ï¼ˆæ˜¯Â·1Â·  å¦Â·0Â·ï¼‰â”‚" << endl;
+	cout << "â”‚";
 	cin >> in;
-	cout << "                                         ©¦" << endl;
+	cout << "                                         â”‚" << endl;
 	if (in == "1")
 		decimal = 1;
 	else if (in == "0")
@@ -97,7 +98,7 @@ void select_decimal()//ÓÃ»§Ñ¡ÔñÊä³ö·½Ê½
 	else
 	{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xFC);
-		cout << "©¦          !!!ÇëÊäÈëÕıÈ·µÄÑ¡Ïî!!!        ©¦" << endl;
+		cout << "â”‚          !!!è¯·è¾“å…¥æ­£ç¡®çš„é€‰é¡¹!!!        â”‚" << endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xF0);
 		select_decimal();
 	}
@@ -106,14 +107,14 @@ void select_decimal()//ÓÃ»§Ñ¡ÔñÊä³ö·½Ê½
 
 void output();
 
-void select_level()//ÓÃ»§Ñ¡ÔñÌâÄ¿µÈ¼¶£¨1¡¢2¡¢3£©
+void select_level()//ç”¨æˆ·é€‰æ‹©é¢˜ç›®ç­‰çº§ï¼ˆ1ã€2ã€3ï¼‰
 {
 	level = 0;
 	string in;
-	cout << "©¦ÇëÊäÈëÌâÄ¿µÈ¼¶(LV1¡¤1¡¤LV2¡¤2¡¤LV3¡¤3¡¤)©¦" << endl;
-	cout << "©¦";
+	cout << "â”‚è¯·è¾“å…¥é¢˜ç›®ç­‰çº§(LV1Â·1Â·LV2Â·2Â·LV3Â·3Â·)â”‚" << endl;
+	cout << "â”‚";
 	cin >> in;
-	cout << "                                         ©¦" << endl;
+	cout << "                                         â”‚" << endl;
 	if (in == "1")
 		output();
 	else if (in == "2")
@@ -123,21 +124,21 @@ void select_level()//ÓÃ»§Ñ¡ÔñÌâÄ¿µÈ¼¶£¨1¡¢2¡¢3£©
 	else
 	{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xFC);
-		cout << "©¦          !!!ÇëÊäÈëÕıÈ·µÄÑ¡Ïî!!!        ©¦" << endl;
+		cout << "â”‚          !!!è¯·è¾“å…¥æ­£ç¡®çš„é€‰é¡¹!!!        â”‚" << endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xF0);
 		select_decimal();
 	}
 	return;
 }
 
-void select_output()//ÓÃ»§Ñ¡ÔñÊä³ö·½Ê½
+void select_output()//ç”¨æˆ·é€‰æ‹©è¾“å‡ºæ–¹å¼
 {
 	out_way = 0;
 	string in;
-	cout << "©¦ÇëÑ¡ÔñÊä³ö·½Ê½£¨ÏÔÊ¾¡¤1¡¤µ¼³öÎÄ¼ş¡¤2¡¤£©©¦" << endl;
-	cout << "©¦";
+	cout << "â”‚è¯·é€‰æ‹©è¾“å‡ºæ–¹å¼ï¼ˆæ˜¾ç¤ºÂ·1Â·å¯¼å‡ºæ–‡ä»¶Â·2Â·ï¼‰â”‚" << endl;
+	cout << "â”‚";
 	cin >> in;
-	cout << "                                         ©¦" << endl;
+	cout << "                                         â”‚" << endl;
 	if (in == "1")
 		out_way = 1;
 	else if (in == "2")
@@ -145,14 +146,14 @@ void select_output()//ÓÃ»§Ñ¡ÔñÊä³ö·½Ê½
 	else
 	{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xFC);
-		cout << "©¦          !!!ÇëÊäÈëÕıÈ·µÄÑ¡Ïî!!!        ©¦" << endl;
+		cout << "â”‚          !!!è¯·è¾“å…¥æ­£ç¡®çš„é€‰é¡¹!!!        â”‚" << endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xF0);
 		select_decimal();
 	}
 	return;
 }
 
-void screen()//¿ØÖÆÌ¨ÏÔÊ¾
+void screen()//æ§åˆ¶å°æ˜¾ç¤º
 {
 	int sum = 0, num = 0;
 	int a[5] = { 0,1,2,3,4 };
@@ -164,6 +165,10 @@ void screen()//¿ØÖÆÌ¨ÏÔÊ¾
 		{
 			sequence[sum++] = operate[i];
 		}
+	}
+	if (bracket == 1)
+	{
+
 	}
 	do
 	{
@@ -178,6 +183,7 @@ void screen()//¿ØÖÆÌ¨ÏÔÊ¾
 		for (int i = 0; i < topics_num; i++)
 		{
 			int t = rand();
+			cout << "NO." << i << ":";
 			for (int j = 0; j < sum; j++)
 			{
 				cout << double(rand() % (magnitude * 100) / 100.0);
@@ -204,7 +210,7 @@ void screen()//¿ØÖÆÌ¨ÏÔÊ¾
 	return;
 }
 
-void file()//Êä³öÎÄ¼ş
+void file()//è¾“å‡ºæ–‡ä»¶
 {
 	ofstream fout("output.txt");
 	queue<char>b;
@@ -232,6 +238,7 @@ void file()//Êä³öÎÄ¼ş
 		for (int i = 0; i < topics_num; i++)
 		{
 			int t = rand();
+			fout << "NO." << i << ":";
 			for (int j = 0; j < sum; j++)
 			{
 				fout << double(rand() % (magnitude * 100) / 100.0);
@@ -258,7 +265,7 @@ void file()//Êä³öÎÄ¼ş
 	return;
 }
 
-void output()//Éú³ÉËãÊ½
+void output()//ç”Ÿæˆç®—å¼
 {
 	if (out_way == 1)
 		screen();
@@ -275,20 +282,20 @@ void welcome()
 	while (1)
 	{
 		system("cls");
-		cout << "©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´" << endl;
-		cout << "©¦        »¶Ó­À´µ½ËÄÔòÔËËãÉú³ÉÆ÷          ©¦" << endl;
-		cout << "©¦                                        ©¦" << endl;
-		cout << "©¦ÏÂÒ»²½ÄúÏë£¿                            ©¦" << endl;
-		cout << "©¦¡¤1¡¤ ¼ÌĞø³öÌâ                          ©¦" << endl;
-		cout << "©¦¡¤2¡¤ ÎÒÒªÍË³ö                          ©¦" << endl;
-		cout << "©¦";
+		cout << "â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”" << endl;
+		cout << "â”‚        æ¬¢è¿æ¥åˆ°å››åˆ™è¿ç®—ç”Ÿæˆå™¨          â”‚" << endl;
+		cout << "â”‚                                        â”‚" << endl;
+		cout << "â”‚ä¸‹ä¸€æ­¥æ‚¨æƒ³ï¼Ÿ                            â”‚" << endl;
+		cout << "â”‚Â·1Â· ç»§ç»­å‡ºé¢˜                          â”‚" << endl;
+		cout << "â”‚Â·2Â· æˆ‘è¦é€€å‡º                          â”‚" << endl;
+		cout << "â”‚";
 		cin >> next;
-		cout << "                                         ©¦" << endl;
+		cout << "                                         â”‚" << endl;
 
-		if (next == 2)//ÍË³ö
+		if (next == 2)//é€€å‡º
 		{
-			cout << "©¦                  bye~                  ©¦" << endl;
-			cout << "©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼" << endl;
+			cout << "â”‚                  bye~                  â”‚" << endl;
+			cout << "â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜" << endl;
 			return;
 		}
 
