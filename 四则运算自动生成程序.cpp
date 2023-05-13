@@ -56,11 +56,24 @@ void select_operation()//用户选择运算符
 void select_data_magnitude()//用户选择数据量级（10，100）
 {
 	magnitude = 0;
+	string in;
 	cout << "│  请输入您想选择的数据量级（10，100）   │" << endl;
 	cout << "│";
-	cin >> magnitude;
+	cin >> in;
 	cout << "                                         │" << endl;
+	if (in == "10")
+		magnitude = 10;
+	else if (in == "100")
+		magnitude = 100;
+	else
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xFC);
+		cout << "│          !!!请输入正确的选项!!!        │" << endl;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xF0);
+		select_data_magnitude();
+	}
 	return;
+
 }
 
 void select_bracket()//用户选择是否需要括号
@@ -116,11 +129,11 @@ void select_level()//用户选择题目等级（1、2、3）
 	cin >> in;
 	cout << "                                         │" << endl;
 	if (in == "1")
-		output();
+		level = 1;
 	else if (in == "2")
-		level = 0;
+		level = 2;
 	else if (in == "3")
-		level = 0;
+		level = 3;
 	else
 	{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xFC);
@@ -177,9 +190,18 @@ void screen()//控制台显示
 	for (int i = 0; i < topics_num; i++)
 	{
 		int t = rand();
+		int p = sum + rand() % (level + 3);
+		int q = rand() % (p - 1);
 		cout << "NO." << i << "：";
-		for (int j = 0; j < sum + rand() % (level + 3); j++)
+		for (int j = 0; j < p; j++)
 		{
+			if (bracket == 1)
+			{
+				if (j == q)
+					cout << "(";
+				if (j == q + (rand() % p) / 2)
+					cout << ")";
+			}
 			if (decimal == 1)
 				cout << double(rand() % (magnitude * 100) / 100.0);
 			else
