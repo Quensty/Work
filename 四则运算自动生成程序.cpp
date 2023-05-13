@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<cstring>
+#include<algorithm>
 #include<cmath>
 #include<queue>
 #include<Windows.h>
