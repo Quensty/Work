@@ -169,7 +169,7 @@ void select_output()//用户选择输出方式
 void screen()//控制台显示
 {
 	int sum = 0, num = 0;
-	int a[5] = { 0,1,2,3,4 };
+	int a[5] = { 0,1,2,3,4 }, b[5] = {1,3,5,0 };
 	int a1[100][5] = { 0 };
 	string sequence[5];
 	for (int i = 0; i < 4; i++)
@@ -190,28 +190,31 @@ void screen()//控制台显示
 	for (int i = 0; i < topics_num; i++)
 	{
 		int t = rand();
-		int p = sum + rand() % (level + 3);
-		int q = rand() % (p - 1);
-		cout << "NO." << i << "：";
+		int p = sum + rand() % level + level;
+		int q = rand() % (p - 2);
+		int u = rand() % (p - q - 1);
+		cout << "NO." << i + 1 << "：";
 		for (int j = 0; j < p; j++)
 		{
 			if (bracket == 1)
 			{
 				if (j == q)
 					cout << "(";
-				if (j == q + (rand() % p) / 2)
-					cout << ")";
 			}
 			if (decimal == 1)
 				cout << double(rand() % (magnitude * 100) / 100.0);
 			else
 				cout << rand() % magnitude;
+			if (bracket == 1)
+			{
+				if (j == q + 1 + u)
+					cout << ")";
+				if (j == p - 1)
+					break;
+			}
 			cout << sequence[a1[t % int(pow(2, sum))][j]];
 		}
-		if (decimal == 1)
-			cout << double(rand() % (magnitude * 100) / 100.0) << "=" << endl;
-		else
-			cout << rand() % magnitude << "=" << endl;
+		cout << "=" << endl;
 	}
 	return;
 }
@@ -219,9 +222,8 @@ void screen()//控制台显示
 void file()//输出文件
 {
 	ofstream fout("output.txt");
-	queue<char>b;
 	int sum = 0, num = 0;
-	int a[5] = { 0,1,2,3,4 };
+	int a[5] = { 0,1,2,3,4 }, b[5] = { 1,3,5,0 };
 	int a1[100][5] = { 0 };
 	string sequence[5];
 	for (int i = 0; i < 4; i++)
@@ -239,23 +241,34 @@ void file()//输出文件
 		}
 		num++;
 	} while (next_permutation(a, a + sum));
-
 	for (int i = 0; i < topics_num; i++)
 	{
 		int t = rand();
-		fout << "NO." << i << "：";
-		for (int j = 0; j < sum + rand() % (level + 3); j++)
+		int p = sum + rand() % level + level;
+		int q = rand() % (p - 2);
+		int u = rand() % (p - q - 1);
+		fout << "NO." << i + 1 << "：";
+		for (int j = 0; j < p; j++)
 		{
+			if (bracket == 1)
+			{
+				if (j == q)
+					fout << "(";
+			}
 			if (decimal == 1)
 				fout << double(rand() % (magnitude * 100) / 100.0);
 			else
 				fout << rand() % magnitude;
+			if (bracket == 1)
+			{
+				if (j == q + 1 + u)
+					fout << ")";
+				if (j == p - 1)
+					break;
+			}
 			fout << sequence[a1[t % int(pow(2, sum))][j]];
 		}
-		if (decimal == 1)
-			fout << double(rand() % (magnitude * 100) / 100.0) << "=" << endl;
-		else
-			fout << rand() % magnitude << "=" << endl;
+		fout << "=" << endl;
 	}
 	return;
 }
@@ -268,8 +281,6 @@ void output()//生成算式
 		file();
 	return;
 }
-
-
 
 void welcome()
 {
