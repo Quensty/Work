@@ -126,7 +126,7 @@ void select_level()//用户选择题目等级（1、2、3）
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xFC);
 		cout << "│          !!!请输入正确的选项!!!        │" << endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xF0);
-		select_decimal();
+		select_level();
 	}
 	return;
 }
@@ -166,10 +166,6 @@ void screen()//控制台显示
 			sequence[sum++] = operate[i];
 		}
 	}
-	if (bracket == 1)
-	{
-
-	}
 	do
 	{
 		for (int i = 0; i < sum; i++)
@@ -178,34 +174,22 @@ void screen()//控制台显示
 		}
 		num++;
 	} while (next_permutation(a, a + sum));
-	if (decimal == 1)
+	for (int i = 0; i < topics_num; i++)
 	{
-		for (int i = 0; i < topics_num; i++)
+		int t = rand();
+		cout << "NO." << i << "：";
+		for (int j = 0; j < sum + rand() % (level + 3); j++)
 		{
-			int t = rand();
-			cout << "NO." << i << ":";
-			for (int j = 0; j < sum; j++)
-			{
+			if (decimal == 1)
 				cout << double(rand() % (magnitude * 100) / 100.0);
-				cout << sequence[a1[t % int(pow(2, sum))][j]];
-			}
-			cout << double(rand() % (magnitude * 100) / 100.0) << "=" << endl;
-		}
-
-	}
-	else
-	{
-		for (int i = 0; i < topics_num; i++)
-		{
-			int t = rand();
-			for (int j = 0; j < sum; j++)
-			{
+			else
 				cout << rand() % magnitude;
-				cout << sequence[a1[t % int(pow(2, sum))][j]];
-			}
-			cout << rand() % magnitude << "=" << endl;
+			cout << sequence[a1[t % int(pow(2, sum))][j]];
 		}
-
+		if (decimal == 1)
+			cout << double(rand() % (magnitude * 100) / 100.0) << "=" << endl;
+		else
+			cout << rand() % magnitude << "=" << endl;
 	}
 	return;
 }
@@ -233,34 +217,23 @@ void file()//输出文件
 		}
 		num++;
 	} while (next_permutation(a, a + sum));
-	if (decimal == 1)
+
+	for (int i = 0; i < topics_num; i++)
 	{
-		for (int i = 0; i < topics_num; i++)
+		int t = rand();
+		fout << "NO." << i << "：";
+		for (int j = 0; j < sum + rand() % (level + 3); j++)
 		{
-			int t = rand();
-			fout << "NO." << i << ":";
-			for (int j = 0; j < sum; j++)
-			{
+			if (decimal == 1)
 				fout << double(rand() % (magnitude * 100) / 100.0);
-				fout << sequence[a1[t % int(pow(2, sum))][j]];
-			}
-			fout << double(rand() % (magnitude * 100) / 100.0) << "=" << endl;
-		}
-
-	}
-	else
-	{
-		for (int i = 0; i < topics_num; i++)
-		{
-			int t = rand();
-			for (int j = 0; j < sum; j++)
-			{
+			else
 				fout << rand() % magnitude;
-				fout << sequence[a1[t % int(pow(2, sum))][j]];
-			}
-			fout << rand() % magnitude << "=" << endl;
+			fout << sequence[a1[t % int(pow(2, sum))][j]];
 		}
-
+		if (decimal == 1)
+			fout << double(rand() % (magnitude * 100) / 100.0) << "=" << endl;
+		else
+			fout << rand() % magnitude << "=" << endl;
 	}
 	return;
 }
@@ -305,6 +278,7 @@ void welcome()
 		select_bracket();
 		select_decimal();
 		select_output();
+		select_level();
 		output();
 		Sleep(5000);
 	}
